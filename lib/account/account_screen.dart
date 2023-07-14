@@ -1,6 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class AccountScreen extends StatelessWidget {
+import '../models/user.dart';
+
+class AccountScreen extends StatefulWidget {
+  const AccountScreen({Key? key}) : super(key: key);
+  @override
+  State<AccountScreen> createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController postalCodeController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUser();
+  }
+
+  Future<void> fetchUser() async {
+    final response = await http.get(Uri.parse('https://dummyjson.com/users/1'));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      setState(() {
+        User newUser = User.fromJson(data);
+        firstNameController.text = newUser.firstName;
+        lastNameController.text = newUser.lastName;
+        usernameController.text = newUser.username;
+        phoneController.text = newUser.phone;
+        emailController.text = newUser.email;
+        addressController.text = newUser.address;
+        postalCodeController.text = newUser.postalCode;
+        cityController.text = newUser.city;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -23,15 +67,16 @@ class AccountScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.5,
                       padding: EdgeInsets.all(8),
                       child: Column(
-                        children: const [
+                        children: [
                           Text('Mon compte',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 30)),
                           TextField(
+                            controller: lastNameController,
                             decoration: InputDecoration(
                               border: UnderlineInputBorder(),
                               labelText: 'Nom',
-                              hintText: 'John',
+                              hintText: 'Montron',
                               hintStyle: TextStyle(
                                   color: Colors.grey, fontSize: 16, height: 3),
                               labelStyle: TextStyle(
@@ -39,6 +84,7 @@ class AccountScreen extends StatelessWidget {
                             ),
                           ),
                           TextField(
+                            controller: firstNameController,
                             decoration: InputDecoration(
                               border: UnderlineInputBorder(),
                               labelText: 'Prénom',
@@ -50,6 +96,7 @@ class AccountScreen extends StatelessWidget {
                             ),
                           ),
                           TextField(
+                            controller: usernameController,
                             decoration: InputDecoration(
                               border: UnderlineInputBorder(),
                               labelText: 'Pseudo',
@@ -74,8 +121,9 @@ class AccountScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       TextField(
+                        controller: phoneController,
                         decoration: InputDecoration(
                           border: UnderlineInputBorder(),
                           labelText: 'Téléphone',
@@ -87,6 +135,7 @@ class AccountScreen extends StatelessWidget {
                         ),
                       ),
                       TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
                           border: UnderlineInputBorder(),
                           labelText: 'Email',
@@ -105,8 +154,9 @@ class AccountScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       TextField(
+                        controller: addressController,
                         decoration: InputDecoration(
                           border: UnderlineInputBorder(),
                           labelText: 'Adresse',
@@ -118,6 +168,7 @@ class AccountScreen extends StatelessWidget {
                         ),
                       ),
                       TextField(
+                        controller: postalCodeController,
                         decoration: InputDecoration(
                           border: UnderlineInputBorder(),
                           labelText: 'Code Postal',
@@ -129,6 +180,7 @@ class AccountScreen extends StatelessWidget {
                         ),
                       ),
                       TextField(
+                        controller: cityController,
                         decoration: InputDecoration(
                           border: UnderlineInputBorder(),
                           labelText: 'Ville',

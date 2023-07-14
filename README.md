@@ -1,16 +1,27 @@
 # flutter_project
 
-A new Flutter project.
+## Explanation
 
-## Getting Started
+An e-commerce application that retrieves data from the API, with navigation for screens:
 
-This project is a starting point for a Flutter application.
+- Home: a page that lists the products.
+- Cart: the list of products placed in the cart, including quantity and total price.
+- Account: information about the user's account, with a form to modify them.
 
-A few resources to get you started if this is your first Flutter project:
+## API Used
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### DummyJSON
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Fake data used as a placeholder during development or prototype testing.
+
+> https://dummyjson.com/
+
+Request to display user information: https://dummyjson.com/users/1
+Request to display the product list: https://dummyjson.com/products&limit=10
+Request to display products in the cart: https://dummyjson.com/carts&limit=6
+
+## Choice of Dependencies
+
+### flutter_rating_bar: ^4.0.1
+
+A simple yet fully customizable rating bar for flutter which also include a rating bar indicator, supporting any fraction of rating.
